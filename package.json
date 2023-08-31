@@ -7,6 +7,9 @@
     "test": "dev",
     "start": "nodemon server.js"
   },
+  "engines": {
+    "node": ">=14 <15"
+  },
   "author": "Divine Obinna",
   "license": "ISC",
   "dependencies": {
