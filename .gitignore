@@ -1,3 +1,4 @@
 node_modules
 .env
 trash.js
+package-lock.json
