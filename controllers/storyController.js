@@ -35,12 +35,15 @@ exports.newStory = tryCatch(async (req, res) => {
 })
 
 exports.prevStory = tryCatch(async (req, res) => {
-    const prev = await Story.findOne({
+    const prev = await Story.find({
         user_id: req.user.id
     })
 
     if(prev) {
-        res.send(prev)
+        res.status(200).json({
+            total: prev.length,
+            data: prev
+        })
     } else {
         throw new AppError("Bad Request", "No recent posts", 403)
     }

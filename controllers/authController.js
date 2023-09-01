@@ -136,7 +136,9 @@ exports.protect = async (req, res, next) => {
   }
 
   if (!token) {
-    throw new AppError('Unauthorized', "You are not logged in! please log in to get access", 401)
+    res.status(401).json({
+      message: "You are not Logged in!"
+    })
   }
     
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
@@ -144,11 +146,15 @@ exports.protect = async (req, res, next) => {
   const currentUser = await User.findById(decoded.id);
 
   if (!currentUser) {
-    throw new AppError("Unauthorized", "This account does not exists", 401)
+    res.status(401).json({
+      message: "Sorry This account does not exists!"
+    })
   }
   
   if (currentUser.changedPasswordAfter(decoded.iat)) {
-    throw new AppError("Unauthorized", 'User recently changed password! please login again', 401)
+    res.status(401).json({
+      message: "This User recently changed password! please login again"
+    })
   }
   
   req.user = currentUser;
