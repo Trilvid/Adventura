@@ -76,12 +76,12 @@ exports.verifyUser = tryCatch(async (req, res) => {
   exports.SignUp =  tryCatch(async (req, res) => {
     
       const user = await User.create({
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
+        // firstname: req.body.firstname,
+        // lastname: req.body.lastname,
         username: req.body.username,
         email: req.body.email,
-        mobile: req.body.mobile,
-        country: req.body.country,
+        // mobile: req.body.mobile,
+        // country: req.body.country,
         password: req.body.password,
         role: req.body.role,
         active: req.body.active,
@@ -95,7 +95,7 @@ exports.verifyUser = tryCatch(async (req, res) => {
 
   // login module 
   exports.Login = tryCatch(async (req, res) => {
-    const {email, password, rememberme} = req.body;
+    const {email, password} = req.body;
 
     const user = await User.findOne({email}).select('+password');
 
@@ -113,11 +113,11 @@ exports.verifyUser = tryCatch(async (req, res) => {
 
     else {
 
-    if(rememberme) {
-     await User.updateOne({email: user.email},{
-        $set: {rememberme: true}
-      })
-    }
+    // if(rememberme) {
+    //  await User.updateOne({email: user.email},{
+    //     $set: {rememberme: true}
+    //   })
+    // }
     return success(200, res, user, "sucessfully logged in")
   // res.send(token)
     }
@@ -288,8 +288,8 @@ exports.updateMe = async (req, res, next) => {
     }``
       
     const filteredBody = filterObj(req.body, 
-        'firstname', 
-        'lastname', 
+        // 'firstname', 
+        // 'lastname', 
         'username', 
         'photo',
         );

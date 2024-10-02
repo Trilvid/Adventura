@@ -6,16 +6,16 @@ const uniqueValidator = require("mongoose-unique-validator")
 
 const userSchema = new mongoose.Schema(
   {
-    firstname: {
-        type: String,
-        required: [true, 'this User must have a firstname'],
-        trim: true
-    },
-    lastname: {
-      type: String,
-      required: [true, 'this user should have a lastname'],
-      trim: true
-    },
+    // firstname: {
+    //     type: String,
+    //     required: [true, 'this User must have a firstname'],
+    //     trim: true
+    // },
+    // lastname: {
+    //   type: String,
+    //   required: [true, 'this user should have a lastname'],
+    //   trim: true
+    // },
     username: {
       type: String,
       required: [true, "user should have a username"],
@@ -39,24 +39,24 @@ const userSchema = new mongoose.Schema(
         minLength: [8, 'minimum password lenght is 8 '],
         select: false
     },
-    country: {
-      type: String,
-      required: [true, 'please select your country']
-    },
-     mobile: { 
-          type: Number, 
-          required: [true, 'sorry this field cannot be empty']
-        },
+    // country: {
+    //   type: String,
+    //   required: [true, 'please select your country']
+    // },
+    //  mobile: { 
+    //       type: Number, 
+    //       required: [true, 'sorry this field cannot be empty']
+    //     },
     role: {
       type: String,
       default: 'user',
       enum: ['user', 'admin', 'superAdmin']
     },
-    rememberme:{
-      type:Boolean,
-      default: false
-    },
-    verified:{type:Boolean, default:false},
+    // rememberme:{
+    //   type:Boolean,
+    //   default: false
+    // },
+    verified:{type:Boolean, default:true},
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,

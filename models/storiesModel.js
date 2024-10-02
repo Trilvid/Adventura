@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { type } = require('os');
 
 const storySchema = new mongoose.Schema({
     title: {
@@ -15,6 +16,7 @@ const storySchema = new mongoose.Schema({
         required: true
     },
     image: {type: String},
+    category: {type: String},
     createdAt:{type:Date, default: Date.now()},
 },
 {
@@ -28,7 +30,8 @@ const storySchema = new mongoose.Schema({
 storySchema.pre(/^find/, function(next) {
   this.populate({
     path: 'user_id',
-    select: 'firstname username'
+    // select: 'firstname username'
+    select: 'username'
   })
   next();
 })
