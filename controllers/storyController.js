@@ -1,6 +1,8 @@
 const Story = require('../models/storiesModel');
 const tryCatch = require('./../utils/tryCatch');
 const AppError = require('./../utils/AppError');
+const fs = require('fs');
+const path = require('path');
 
 const success = (statusCode, res, message, author) => {
     res.status(statusCode).json({
@@ -30,20 +32,64 @@ exports.getAllStories = tryCatch(async (req, res) => {
 })
 
 
-exports.newStory = tryCatch(async (req, res) => {
-    const data = {
-        title: req.body.title,
-        story: req.body.story,
-        image: req.body.image,
-        user_id: req.user.id,
-        category: req.body.category
+// exports.newStory = tryCatch(async (req, res) => {
+
+//     // const data = {
+//     //     title: req.body.title,
+//     //     story: req.body.story,
+//     //     image: req.body.image,
+//     //     user_id: req.user.id,
+//     //     category: req.body.category,
+//     //     geolocation: req.body.geolocation
+//     // }
+
+//     // const newStory = await Story.create(data)
+
+//     // success(201, res, newStory)
+
+// })
+
+
+exports.newStory = async (req, res) => {
+    try {
+        const { title, story, category, image } = req.body;
+
+        const uploadsDir = path.join(__dirname, '..', 'uploads');
+
+        if (!fs.existsSync(uploadsDir)) {
+            fs.mkdirSync(uploadsDir);
+        }
+
+        let imagePath = '';
+        if (image) {
+            const base64Data = image.replace(/^data:image\/\w+;base64,/, ''); 
+            const buffer = Buffer.from(base64Data, 'base64');
+
+            const imageName = `${Date.now()}-image.png`;
+            imagePath = `/uploads/${imageName}`;
+            fs.writeFileSync(path.join(uploadsDir, imageName), buffer); 
+        }
+
+        // Create the new story in the database
+        const newStory = new Story({
+            title,
+            user_id: req.user.id,
+            story,
+            category,
+            image: imagePath,
+            geolocation: req.body.geolocation
+        });
+
+        await newStory.save();
+        res.status(201).json({ message: 'Post created successfully!', newStory });
+
+    } catch (error) {
+        console.error('Error creating story:', error);
+        res.status(500).json({ message: 'Server error. Could not create post.' });
     }
+};
 
-    const newStory = await Story.create(data)
 
-    success(201, res, newStory)
-
-})
 
 exports.prevStory = tryCatch(async (req, res) => {
     const prev = await Story.find({

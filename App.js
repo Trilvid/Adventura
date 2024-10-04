@@ -9,6 +9,8 @@ const story = require("./routes/storyRoute");
 const auth = require("./routes/authRoute");
 const comment = require("./routes/commentRoute");
 const errorHandeler = require("./controllers/errorHandler")
+const fileUpload = require('express-fileupload');
+const path = require('path');
 
 const app = express();
 
@@ -17,11 +19,15 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-app.use(express.json());
-app.use(express.static('public'));
+app.use(cors())
+app.use(express.json({ limit: '10mb' }));
+app.use(fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 }
+}));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// app.use(express.static('public'));
 app.use(cookieParser());
 app.use(helmet())
-app.use(cors())
 
 // custom cors for using 2 ports cd
 // app.use(cors({
@@ -32,13 +38,16 @@ app.use(cors())
 
 app.set('view engine', 'ejs');
 
+// app.use(fileUpload());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 app.use((req, res, next) => {
     req.requestTime = new Date().toISOString();
     next();
   });
+
+// app.use('/uploads', express.static('uploads'));
 
 // 2) Error handler middleware
 app.get('/', (req, res, next) => {
