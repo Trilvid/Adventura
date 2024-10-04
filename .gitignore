@@ -2,4 +2,3 @@ node_modules
 .env
 trash.js
 # package-lock.json
-tsconfig.ts
