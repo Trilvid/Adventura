@@ -20,12 +20,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(cors())
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');  // Allow all origins
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-});
 app.use(express.json({ limit: '10mb' }));
 app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 }
