@@ -20,11 +20,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(cors())
-app.use(cors({
-  origin: '*',  // Allow all origins
-  methods: 'GET,POST,PUT,DELETE,PATCH',
-  allowedHeaders: 'Content-Type, Authorization'
-}));
 app.use(express.json({ limit: '10mb' }));
 app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 }
@@ -33,14 +28,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // app.use(express.static('public'));
 app.use(cookieParser());
 app.use(helmet())
-
-// custom cors for using 2 ports cd
-// app.use(cors({
-//   origin: ['http://localhost:3000', 'http://localhost:4000'],
-//   methods: 'GET,PATCH,POST,DELETE',
-//   credentials: true 
-// }));
-
 app.set('view engine', 'ejs');
 
 // app.use(fileUpload());
