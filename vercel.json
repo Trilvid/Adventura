@@ -6,16 +6,15 @@
         "destination": "/api"
       }
     ],
-    "headers": [
-      {
-        "source": "/(.*)",
-        "headers": [
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "*"
-          }
-        ]
-      }
-    ]
+      "headers": [
+        {
+          "source": "/(.*)",
+          "headers": [
+            {
+              "key": "ACCESS-CONTROL-ALLOW-ORIGIN",
+              "value": "*"
+            }
+          ]
+        }
+      ]
   }
-  
