@@ -10,7 +10,8 @@ mongoose.set('strictQuery', false);
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 10000 
   })
   .then(() => console.log('DB is connected successful!'));
 
