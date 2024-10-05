@@ -1,20 +1,27 @@
 {
     "version": 2,
-    "rewrites": [
+    "builds": [
       {
-        "source": "/(.*)",
-        "destination": "/api/v1"
+        "src": "server.js",
+        "use": "@vercel/node"
       }
     ],
-      "headers": [
-        {
-          "source": "/(.*)",
-          "headers": [
-            {
-              "key": "ACCESS-CONTROL-ALLOW-ORIGIN",
-              "value": "*"
-            }
-          ]
-        }
-      ]
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "server.js"
+      }
+    ],
+    "headers": [
+      {
+        "source": "/(.*)",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
+        ]
+      }
+    ]
   }
+  
