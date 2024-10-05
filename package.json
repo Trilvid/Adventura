@@ -2,9 +2,9 @@
   "name": "authenticator",
   "version": "1.0.0",
   "description": "an open api for developers to use for the signIn and signUp page developed using typescript",
-  "main": "App.js",
+  "main": "server.js",
   "scripts": {
-    "test": "dev",
+    "dev": "node .",
     "start": "nodemon server.js"
   },
   "engines": {
@@ -30,5 +30,8 @@
     "nodemailer": "^6.9.4",
     "nodemon": "^2.0.22",
     "validator": "^13.11.0"
+  },
+  "devDependencies": {
+    "vercel": "^34.2.3"
   }
 }
